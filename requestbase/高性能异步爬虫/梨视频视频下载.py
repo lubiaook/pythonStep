@@ -80,3 +80,6 @@ def getPage(obj):
 
 pool = Pool(len(li))
 pool.map(getPage, my_set)
+
+
+
