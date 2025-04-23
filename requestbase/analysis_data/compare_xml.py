@@ -1,28 +1,59 @@
-import requests
-from lxml import etree
+from lxml import etree as ET
+
+
+def compare_elements(elem1, elem2):
+    differences = []
+
+    # 比较属性
+    attrs1 = elem1.attrib
+    attrs2 = elem2.attrib
+
+    for attr in attrs1:
+        if attr not in attrs2:
+            differences.append(f"Attribute '{attr}' missing in second element")
+        elif attrs1[attr] != attrs2[attr]:
+            differences.append(f"Different values for attribute '{attr}': '{attrs1[attr]}' != '{attrs2[attr]}'")
+
+    for attr in attrs2:
+        if attr not in attrs1:
+            differences.append(f"Attribute '{attr}' missing in first element")
+
+    return differences
+
+
+def compare_trees(tree1, tree2):
+    differences = []
+
+    root1 = tree1.getroot()
+    root2 = tree2.getroot()
+
+    # 遍历root2的所有元素，并在root1中查找对应的元素
+    for elem2 in root2.iter():
+        xpath = tree2.getpath(elem2)
+        elem1 = root1.xpath(xpath)
+        if not elem1:
+            differences.append(f"Element '{xpath}' missing in first XML")
+        else:
+            elem1 = elem1[0]
+            element_diffs = compare_elements(elem1, elem2)
+            if element_diffs:
+                differences.append(f"Differences in element '{xpath}': {element_diffs}")
+
+    return differences
+
 
 if __name__ == '__main__':
-    url = 'https://bj.58.com/ershoufang/?PGTID=0d100000-0000-1961-a3da-2d92c0ae1216&ClickID=4'
-    header = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
-    }
-    response = requests.get(url=url, headers=header)
-    with open('./58.html', 'w', encoding='utf-8') as fp:
-        fp.write(response.text)
+    # 读取文件1和文件2的内容
+    with open('prod.xml', 'r', encoding='utf8') as f1, open('local.xml', 'r', encoding='utf8') as f2:
+        xml1 = f1.read()
+        xml2 = f2.read()
 
-        # print(response.text)
-        etree = etree.HTML(response.text)
-        # ex = etree.xpath('//div[@name="property-content-title"]')
-        # print(ex)
-        # h3ex = etree.xpath('//h3/@title')
-        # for hs in h3ex:
-        #     print(hs)
+    # 解析XML
+    tree1 = ET.ElementTree(ET.fromstring(xml1.encode()))
+    tree2 = ET.ElementTree(ET.fromstring(xml2.encode()))
 
-        # 将价格、和主标题存储
-    list_content = etree.xpath('//div[@class="property-content"]')
-    # print(list_content)
-    for detail in list_content:
-        title = detail.xpath('.//h3/@title')
-        price =detail.xpath('.//span[@class="property-price-total-num"]/text()')
-        print(title[0])
-        print(price[0])
+    differences = compare_trees(tree1, tree2)
+
+    print("Differences found:")
+    for diff in differences:
+        print(diff)

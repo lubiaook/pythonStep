@@ -54,7 +54,6 @@ def get_data_for_dict(url):
                 if second_col_text.endswith(('01', '05', '09')):
                     filtered_data.append(second_col_text)
 
-
         # 打印过滤后的数据
         for data in filtered_data:
             print(data)
@@ -174,8 +173,8 @@ def get_data_for_forex_money(type):
     if type == '':
         url = 'https://finance.pae.baidu.com/vapi/v1/getquotation?group=huilv_minute&need_reverse_real=1&code=USDCNH&finClientType=pc'
     else:
-        url = 'https://finance.pae.baidu.com/vapi/v1/getquotation?group=huilv_minute&need_reverse_real=1&code='+type+'&finClientType=pc'
-    data = get_data_for_forex_money_A_V2(url)
+        url = 'https://finance.pae.baidu.com/vapi/v1/getquotation?group=huilv_minute&need_reverse_real=1&code=' + type + '&finClientType=pc'
+    data = get_data_for_forex_money_A(url)
     return jsonify({'data': data})
 
 
@@ -192,15 +191,14 @@ def get_data_for_forex_money_A_V2(url):
         data = response.json()
         if response.status_code == 200 and data['ResultCode'] == 0:
             current_price = data['Result']['cur']['price']
-
             data = {
                 'status': 1,
-                'current': current_price
+                'current': float(current_price)
             }
         else:
             data = {
                 'status': 0,
-                'error': '接口请求失败'+response.status_code
+                'error': '接口请求失败' + response.status_code
             }
     except requests.RequestException as e:
         return {
@@ -209,9 +207,10 @@ def get_data_for_forex_money_A_V2(url):
         }
     return data
 
+
 # 获取人民币离案
 def get_data_for_forex_money_A(url):
-    # url = 'https://finance.sina.com.cn/money/forex/hq/USDCNH.shtml'
+    url = 'https://finance.sina.com.cn/money/forex/hq/USDCNH.shtml'
     try:
         chrome_driver_path = './chromedriver'
         options = webdriver.ChromeOptions()
@@ -251,6 +250,7 @@ def build_url(base_url, params):
 
 # 获取当前时间戳
 current_timestamp = int(time.time() * 1000)
+
 
 @app.route('/get_qihuo/<type>', methods=['GET'])
 def get_qihuo(type):
@@ -309,6 +309,50 @@ def get_filtered_data(url, proxies=None):
             'status': 0,
             'error': str(e)
         }
+
+
+@app.route('/get_ship_location/<code>', methods=['GET'])
+def getShipLocation(code):
+    try:
+        chrome_driver_path = './chromedriver'
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        driver = webdriver.Chrome(executable_path=chrome_driver_path, options=options)
+        driver.get('https://www.shipxy.com/')
+
+        # 等待页面加载（如果需要的话，可以使用显式等待）
+        #time.sleep(1)  # 这里使用简单的time.sleep作为示例，实际应使用WebDriverWait
+
+        # 通过XPath找到输入框并输入内容
+        input_box = driver.find_element(By.XPATH, '//*[@id="txtKey"]')
+        input_box.send_keys(code)
+        # 通过XPath找到并点击按钮
+        search_button = driver.find_element(By.XPATH, '//*[@id="searchBtn"]')
+        search_button.click()
+        time.sleep(1)
+        # 等待搜索结果加载（如果需要的话，可以再次使用显式等待）
+        #close_button =driver.find_element(By.XPATH,'//*[@id="shipinfoTitle"]/div[1]/a/img');
+        # close_button.click()
+        si_lat = driver.find_element(By.XPATH,'//*[@id="si__lat"]')
+        si_lon = driver.find_element(By.XPATH,'//*[@id="si__lon"]')
+        # 进行其他操作或打印页面内容（可选）
+        data = {
+            'status': 1,
+            'si_lat': si_lat.text,
+            'si_lon': si_lon.text
+        }
+
+        driver.quit()
+    except NoSuchElementException as e:
+        # 处理元素未找到异常
+          data = {'status': 0,
+                'error': 'Element not found'}
+    except Exception as e:
+        # 处理其他异常
+          data = {'status': 0, 'error': str(e)}
+    return data;
 
 
 if __name__ == '__main__':

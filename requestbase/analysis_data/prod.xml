@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<app xmlns="http://www.actionsoft.com.cn/app">  
+  <name>流程中心</name>  
+  <version>1.1</version>  
+  <buildNo>14</buildNo>  
+  <developer id="776cca9a287c8b4d63b9cad216aa3859" tablePrefix="ACT" url="http://www.actionsoft.com.cn">北京炎黄盈动科技发展有限责任公司</developer>  
+  <categoryVisible>true</categoryVisible>  
+  <description><![CDATA[		能够集中、高效的处理个人和委托人的工作任务。
+	]]></description>  
+  <details><![CDATA[		这是一个与AWS BPMS引擎无缝集成的官方推荐应用，帮助BPM用户集中、高效的完成所有工作任务，查看和跟踪任务历史，当用户暂时休假或工作需要时，可以设置和管理个人待办委托给指定人员。该应用还可以通过集成扩展，统一展示和处理各类非AWS BPMS引擎驱动的任务，如来自其他系统的任务、日程todo
+
+        <b>主要功能</b>
+		- 统一处理个人和委托人的待处理任务，提供查询和分组
+		- 统一处理个人和委托人的未阅读通知任务，提供查询和分组
+		- 统一查询和跟踪个人已完成的任务，提供查询和分组
+		- 统一查询和跟踪用户已创建的流程
+		- 设置和管理个人委托申请
+		- 高级扩展支持，如页签扩展、列扩展
+
+	]]></details>  
+  <installDate>2018-05-02 18:30:21</installDate>  
+  <installListener/>  
+  <pluginListener>com.actionsoft.apps.workbench.Plugins</pluginListener>  
+  <startListener/>  
+  <stopListener/>  
+  <upgradeListener/>  
+  <uninstallListener/>  
+  <depend versions="6.1" env="6.3.3">_bpm.portal</depend>  
+  <requires> 
+    <require appId="com.actionsoft.apps.notification" notActiveHandler=""/>  
+    <require appId="com.actionsoft.apps.wechat" notActiveHandler=""/>  
+    <require appId="com.actionsoft.apps.dingding" notActiveHandler=""/>  
+    <require appId="com.actionsoft.apps.addons.es" notActiveHandler="none"/>  
+    <require appId="_bpm.platform" notActiveHandler="none"/>  
+    <require appId="com.actionsoft.apps.addons.xpages" notActiveHandler="none"/>  
+    <require appId="com.actionsoft.apps.dingding.yijing" notActiveHandler="none" res="false"/>  
+    <require appId="com.actionsoft.apps.feishu.open" notActiveHandler="none"/> 
+  </requires>  
+  <reloadable>true</reloadable>  
+  <properties> 
+    <property action="hidden" group="未读通知" name="unreadNotice-NUMBER-desc" title="未读通知序号列描述" type="input" isSystem="false" desc="序号列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="未读通知" name="unreadNotice-OWNER-desc" title="未读通知来自列描述" type="input" isSystem="false" desc="来自列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="未读通知" name="unreadNotice-TITLE-desc" title="未读通知标题列描述" type="input" isSystem="false" desc="标题列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="未读通知" name="unreadNotice-TYPE-desc" title="未读通知类型列描述" type="input" isSystem="false" desc="类型列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="未读通知" name="unreadNotice-DATE-desc" title="未读通知接收时间列描述" type="input" isSystem="false" desc="接收时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-CHECK-desc" title="待办任务选择列描述" type="input" isSystem="false" desc="选择列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-NUMBER-desc" title="待办任务序号列描述" type="input" isSystem="false" desc="序号列描述，鼠标移动此列时出现的提示">买哦苏 的冯绍峰</property>  
+    <property action="hidden" group="待办任务" name="todo-OWNER-desc" title="待办任务来自列描述" type="input" isSystem="false" desc="来自列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-TITLE-desc" title="待办任务标题列描述" type="input" isSystem="false" desc="标题列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-TYPE-desc" title="待办任务类型列描述" type="input" isSystem="false" desc="类型列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-DATE-desc" title="待办任务接收时间列描述" type="input" isSystem="false" desc="接收时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="待办任务" name="todo-DEADLINE-desc" title="待办任务期限列描述" type="input" isSystem="false" desc="期限列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-NUMBER-desc" title="已办任务序号列描述" type="input" isSystem="false" desc="序号列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-OWNER-desc" title="已办任务来自列描述" type="input" isSystem="false" desc="来自列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-TITLE-desc" title="已办任务标题列描述" type="input" isSystem="false" desc="标题列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-TYPE-desc" title="已办任务类型列描述" type="input" isSystem="false" desc="类型列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-DATE-desc" title="已办任务办理时间列描述" type="input" isSystem="false" desc="办理时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-COSTTIME-desc" title="已办任务耗时列描述" type="input" isSystem="false" desc="耗时列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-STATE-desc" title="已办任务状态列描述" type="input" isSystem="false" desc="状态列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-TRACK-desc" title="已办任务跟踪列描述" type="input" isSystem="false" desc="跟踪列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="已办任务" name="history-REVOKE-desc" title="已办任务收回列描述" type="input" isSystem="false" desc="收回列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-NUMBER-desc" title="通知查询序号列描述" type="input" isSystem="false" desc="序号列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-OWNER-desc" title="通知查询来自列描述" type="input" isSystem="false" desc="来自列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-TITLE-desc" title="通知查询标题列描述" type="input" isSystem="false" desc="标题列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-TYPE-desc" title="通知查询类型列描述" type="input" isSystem="false" desc="类型列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-DATE-desc" title="通知查询接收时间列描述" type="input" isSystem="false" desc="接收时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="通知查询" name="notice-READTIME-desc" title="通知查询阅读时间列描述" type="input" isSystem="false" desc="阅读时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-NUMBER-desc" title="发起跟踪序号列描述" type="input" isSystem="false" desc="序号列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-TITLE-desc" title="发起跟踪标题列描述" type="input" isSystem="false" desc="来自列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-TYPE-desc" title="发起跟踪类型列描述" type="input" isSystem="false" desc="类型列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-DATE-desc" title="发起跟踪创建时间列描述" type="input" isSystem="false" desc="创建时间列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-TRACK-desc" title="发起跟踪跟踪列描述" type="input" isSystem="false" desc="跟踪列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-REVOCATION-desc" title="发起跟踪撤销列描述" type="input" isSystem="false" desc="撤销列描述，鼠标移动此列时出现的提示"/>  
+    <property action="hidden" group="发起跟踪" name="track-REMINDERS-desc" title="发起跟踪催办列描述" type="input" isSystem="false" desc="催办列描述，鼠标移动此列时出现的提示"/>  
+    <property action="edit" group="全局属性" name="todo-index" title="待办任务位置索引" type="input" isSystem="false" desc="待办任务位置索引&lt;br&gt;&lt;br&gt;待办任务位置索引，未读通知位置索引，已办任务位置索引，通知查询位置索引，发起跟踪位置索引的索引值可以在（1,2,3,4,5）范围中进行更改调换，索引值不允许重复，不能大于5，不符合条件的按当前默认顺序设置&lt;br&gt;&lt;br&gt;注意：更改五个中任意一个，要检查剩余4个的索引值是否适当变化，避免重复">1</property>  
+    <property action="edit" group="全局属性" name="unreadNotice-index" title="未读通知位置索引" type="input" isSystem="false" desc="未读通知位置索引&lt;br&gt;&lt;br&gt;待办任务位置索引，未读通知位置索引，已办任务位置索引，通知查询位置索引，发起跟踪位置索引的索引值可以在（1,2,3,4,5）范围中进行更改调换，索引值不允许重复，不能大于5，不符合条件的按当前默认顺序设置&lt;br&gt;&lt;br&gt;注意：更改五个中任意一个，要检查剩余4个的索引值是否适当变化，避免重复">2</property>  
+    <property action="edit" group="全局属性" name="history-index" title="已办任务位置索引" type="input" isSystem="false" desc="已办任务位置索引&lt;br&gt;&lt;br&gt;待办任务位置索引，未读通知位置索引，已办任务位置索引，通知查询位置索引，发起跟踪位置索引的索引值可以在（1,2,3,4,5）范围中进行更改调换，索引值不允许重复，不能大于5，不符合条件的按当前默认顺序设置&lt;br&gt;&lt;br&gt;注意：更改五个中任意一个，要检查剩余4个的索引值是否适当变化，避免重复">3</property>  
+    <property action="edit" group="全局属性" name="notice-index" title="通知查询位置索引" type="input" isSystem="false" desc="通知查询位置索引&lt;br&gt;&lt;br&gt;待办任务位置索引，未读通知位置索引，已办任务位置索引，通知查询位置索引，发起跟踪位置索引的索引值可以在（1,2,3,4,5）范围中进行更改调换，索引值不允许重复，不能大于5，不符合条件的按当前默认顺序设置&lt;br&gt;&lt;br&gt;注意：更改五个中任意一个，要检查剩余4个的索引值是否适当变化，避免重复">4</property>  
+    <property action="edit" group="全局属性" name="track-index" title="发起跟踪位置索引" type="input" isSystem="false" desc="发起跟踪位置索引&lt;br&gt;&lt;br&gt;待办任务位置索引，未读通知位置索引，已办任务位置索引，通知查询位置索引，发起跟踪位置索引的索引值可以在（1,2,3,4,5）范围中进行更改调换，索引值不允许重复，不能大于5，不符合条件的按当前默认顺序设置&lt;br&gt;&lt;br&gt;注意：更改五个中任意一个，要检查剩余4个的索引值是否适当变化，避免重复">5</property>  
+    <property action="edit" group="全局属性" name="startup-hidden" title="发起流程是否隐藏" type="combox" isSystem="false" desc="是否隐藏发起流程导航" ref="true|false">true</property>  
+    <property action="edit" group="全局属性" name="todo-hidden" title="待办任务是否隐藏" type="combox" isSystem="false" desc="是否隐藏待办任务导航" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="unreadNotice-hidden" title="未读通知是否隐藏" type="combox" isSystem="false" desc="是否隐藏未读通知导航" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="history-hidden" title="已办任务是否隐藏" type="combox" isSystem="false" desc="是否隐藏已办任务导航" ref="true|false">true</property>  
+    <property action="edit" group="全局属性" name="notice-hidden" title="通知查询是否隐藏" type="combox" isSystem="false" desc="是否隐藏通知查询导航" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="track-hidden" title="发起跟踪是否隐藏" type="combox" isSystem="false" desc="是否隐藏发起跟踪导航" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="isApplyDefaultQueryCondition" title="是否应用默认查询条件" type="combox" isSystem="false" desc="是否应用默认查询条件" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="todo-extColumn" title="待办任务扩展列" type="input" isSystem="false" desc="待办任务扩展列的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchColumnInterface接口">com.awspaas.user.apps.common:com.awspaas.user.apps.common.extension.WorkbenchExtensionProcessCreateUser</property>  
+    <property action="edit" group="全局属性" name="unreadNotice-extColumn" title="未读通知扩展列" type="input" isSystem="false" desc="未读通知扩展列的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchColumnInterface接口">com.awspaas.user.apps.common:com.awspaas.user.apps.common.extension.WorkbenchExtensionProcessCreateUser</property>  
+    <property action="edit" group="全局属性" name="history-extColumn" title="已办任务扩展列" type="input" isSystem="false" desc="已办任务扩展列的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchColumnInterface接口">com.awspaas.user.apps.common:com.awspaas.user.apps.common.extension.WorkbenchExtensionPushTransact</property>  
+    <property action="edit" group="全局属性" name="notice-extColumn" title="通知查询扩展列" type="input" isSystem="false" desc="通知查询扩展列的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchColumnInterface接口">com.awspaas.user.apps.common:com.awspaas.user.apps.common.extension.WorkbenchExtensionProcessCreateUser</property>  
+    <property action="edit" group="全局属性" name="track-extColumn" title="发起跟踪扩展列" type="input" isSystem="false" desc="发起跟踪扩展列的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchColumnInterface接口">com.awspaas.user.apps.common:com.awspaas.user.apps.common.extension.WorkbenchExtensionProcessCreateUser</property>  
+    <property action="edit" group="全局属性" name="panel" title="扩展面板" type="textarea" isSystem="false" desc="工作台扩展面板,以数组[{},{}]罗列扩展面板。&lt;br&gt;属性值有：&lt;br&gt;boxName(扩展面板唯一标识，必须，不能和其他重复)&lt;br&gt;title(扩展面板标题)、&lt;br&gt;index(导航索引位置)、&lt;br&gt;url(扩展面板页面url)、&lt;br&gt;target(页面打开目标,值：mainframe|window)、&lt;br&gt;hidden(页面是否隐藏)、&lt;br&gt;icon(导航菜单展开时的扩展面板图标)、&lt;br&gt;simpleIcon(导航菜单收缩时的扩展面板图标)。" ref="">[{"hidden":"false","icon":"../apps/_bpm.portal/img/worklist/nav-history.png","index":"6","boxName":"selfProcessSet","title":"新已办查询","simpleIcon":"../apps/_bpm.portal/img/worklist/nav-history-low.png","url":"./w?sid=@sid&amp;cmd=CLIENT_DW_PORTAL&amp;processGroupId=obj_1059eb0757c040e39ad8d60099745d9d&amp;appId=com.awspaas.user.apps.common&amp;dwViewId=obj_3b740609a5bc4b2299e3ab48a210622d","target":"mainframe"},{"hidden":"false","icon":"&amp;#xe833;","index":"7","title":"委托设置","simpleIcon":"&amp;#xe833;","url":"","target":"mainframe"},{"hidden":"false","icon":"../apps/_bpm.portal/img/worklist/nav-processSet.png","index":8,"title":"个人流程查询","simpleIcon":"../apps/_bpm.portal/img/worklist/nav-delegate-low.png","url":"./w?sid=@sid&amp;cmd=CLIENT_DW_PORTAL&amp;processGroupId=obj_666663caff934a7fbc0152c1002dbfcd&amp;appId=com.awspaas.user.apps.common","target":"mainframe"},{"hidden":"false","icon":"../apps/_bpm.portal/img/worklist/nav-history.png","index":9,"boxName":"selfProcessSet","title":"个人已办查询","simpleIcon":"../apps/_bpm.portal/img/worklist/nav-history-low.png","url":"./w?sid=@sid&amp;cmd=CLIENT_DW_PORTAL&amp;processGroupId=obj_9799ef56eada423eb092d3316c493c2d&amp;appId=com.awspaas.user.apps.common&amp;dwViewId=obj_6167b6d9650c4011b3887bd06b72fef5","target":"mainframe"},{"hidden":"false","icon":"../apps/_bpm.portal/img/worklist/nav-history.png","index":10,"boxName":"testProcessSet","title":"已办查询测试","simpleIcon":"../apps/_bpm.portal/img/worklist/nav-history-low.png","url":"./w?cmd=com.awspaas.user.apps.common/tasksDone/getMainPage","target":"mainframe"}]</property>  
+    <property action="edit" group="全局属性" name="delegationProcess" title="委托流程设置" type="input" isSystem="false" desc="委托信息需要流程审批时，需要配置一个流程定义ID，“我的工作台”App下提供了一个默认的委托流程，可进行优化使用"/>  
+    <property action="edit" group="全局属性" name="page" title="每页行数" type="input" isSystem="false" desc="分页工具每页显示多少条数据，默认每页50条">20</property>  
+    <property action="edit" group="全局属性" name="refreshTime" title="定时刷新间隔" type="input" isSystem="false" desc="工作台列表的自动刷新时间，默认为五分钟，值：300000，单位：ms">300000</property>  
+    <property action="edit" group="全局属性" name="openTarget" title="打开方式" type="combox" isSystem="false" desc="工作台列表的链接的打开目标，mainframe|window" ref="主工作区:mainframe|新窗口(浏览器标签页):window">mainframe</property>  
+    <property action="edit" group="全局属性" name="notification-new-task" title="新任务到达提醒" type="combox" isSystem="false" desc="监听全局流程事件，当有新任务到达后将信息推送给通知中心" ref="true|false">true</property>  
+    <property action="edit" group="全局属性" name="orderConfig" title="待办列表排序规则" type="input" isSystem="false" desc="每个排序规则以 '字段名|desc/asc'表示, 多个以排序以逗号分隔, 示例 READSTATE|asc,BEGINTIME|desc" ref=""/>  
+    <property action="edit" group="待办任务" name="todo-CHECK-title" title="待办任务选择列标题" type="input" isSystem="false" desc="选择列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">check</property>  
+    <property action="edit" group="待办任务" name="todo-NUMBER-title" title="待办任务序号列标题" type="input" isSystem="false" desc="序号列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">序号</property>  
+    <property action="edit" group="待办任务" name="todo-OWNER-title" title="待办任务来自列标题" type="input" isSystem="false" desc="来自列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">来自</property>  
+    <property action="edit" group="待办任务" name="todo-TITLE-title" title="待办任务标题列标题" type="input" isSystem="false" desc="标题列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">icon|标题</property>  
+    <property action="edit" group="待办任务" name="todo-TYPE-title" title="待办任务类型列标题" type="input" isSystem="false" desc="类型列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">类型</property>  
+    <property action="edit" group="待办任务" name="todo-DATE-title" title="待办任务接收时间列标题" type="input" isSystem="false" desc="接收时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">接收时间</property>  
+    <property action="edit" group="待办任务" name="todo-DEADLINE-title" title="待办任务期限列标题" type="input" isSystem="false" desc="期限列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">期限</property>  
+    <property action="edit" group="待办任务" name="todo-CHECK-hidden" title="待办任务选择列是否隐藏" type="combox" isSystem="false" desc="选择列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-NUMBER-hidden" title="待办任务序号列是否隐藏" type="combox" isSystem="false" desc="序号列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-OWNER-hidden" title="待办任务来自列是否隐藏" type="combox" isSystem="false" desc="来自列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-TITLE-hidden" title="待办任务标题列是否隐藏" type="combox" isSystem="false" desc="标题列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-TYPE-hidden" title="待办任务类型列是否隐藏" type="combox" isSystem="false" desc="类型列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-DATE-hidden" title="待办任务接收时间列是否隐藏" type="combox" isSystem="false" desc="接收时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-DEADLINE-hidden" title="待办任务期限列是否隐藏" type="combox" isSystem="false" desc="期限列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="待办任务" name="todo-CHECK-width" title="待办任务选择列宽度" type="input" isSystem="false" desc="选择列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="待办任务" name="todo-NUMBER-width" title="待办任务序号列宽度" type="input" isSystem="false" desc="序号列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="待办任务" name="todo-OWNER-width" title="待办任务来自列宽度" type="input" isSystem="false" desc="来自列宽度">80px</property>  
+    <property action="edit" group="待办任务" name="todo-TITLE-width" title="待办任务标题列宽度" type="input" isSystem="false" desc="标题列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">auto</property>  
+    <property action="edit" group="待办任务" name="todo-TYPE-width" title="待办任务类型列宽度" type="input" isSystem="false" desc="类型列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">150px</property>  
+    <property action="edit" group="待办任务" name="todo-DATE-width" title="待办任务接收时间列宽度" type="input" isSystem="false" desc="接收时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="待办任务" name="todo-DEADLINE-width" title="待办任务期限列宽度" type="input" isSystem="false" desc="期限列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">80px</property>  
+    <property action="edit" group="待办任务" name="todo-NUMBER-index" title="待办任务序号列位置索引" type="input" isSystem="false" desc="序号列位置索引">1</property>  
+    <property action="edit" group="待办任务" name="todo-CHECK-index" title="待办任务选择列位置索引" type="input" isSystem="false" desc="选择列位置索引">2</property>  
+    <property action="edit" group="待办任务" name="todo-OWNER-index" title="待办任务来自列位置索引" type="input" isSystem="false" desc="来自列位置索引">3</property>  
+    <property action="edit" group="待办任务" name="todo-TITLE-index" title="待办任务标题列位置索引" type="input" isSystem="false" desc="标题列位置索引">4</property>  
+    <property action="edit" group="待办任务" name="todo-TYPE-index" title="待办任务类型列位置索引" type="input" isSystem="false" desc="类型列位置索引">5</property>  
+    <property action="edit" group="待办任务" name="todo-DATE-index" title="待办任务接收时间列位置索引" type="input" isSystem="false" desc="接收时间列位置索引">6</property>  
+    <property action="edit" group="待办任务" name="todo-DEADLINE-index" title="待办任务期限列位置索引" type="input" isSystem="false" desc="期限列位置索引">7</property>  
+    <property action="edit" group="待办任务" name="todo-CLAIM-show" title="待办任务是否显示认领任务" type="combox" isSystem="false" desc="是否显示认领任务" ref="true|false">true</property>  
+    <property action="edit" group="待办任务" name="todo-SUSPEND-show" title="待办任务是否显示挂起任务" type="combox" isSystem="false" desc="是否显示挂起任务，仅针对任务的挂起，挂起流程实例并不会挂起任务，所以不针对流程实例的持起" ref="true|false">true</property>  
+    <property action="edit" group="待办任务" name="todo-CustomCondition" title="待办任务自定义查询条件" type="textarea" isSystem="false" desc="自定义查询条件【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;BEGINTIME&quot;,&quot;title&quot;:&quot;开始时间&quot;,&quot;type&quot;:&quot;date&quot;,&quot;compare&quot;:&quot;=&quot;},{&quot;fieldName&quot;:&quot;TASKTITLE&quot;,&quot;title&quot;:&quot;任务标题&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;%&quot;}]" ref="">[{"fieldName":"BEGINTIME","title":"开始时间","type":"date","compare":"="}]</property>  
+    <property action="edit" group="待办任务" name="todo-DefaultQueryCondition" title="待办任务默认查询条件" type="textarea" isSystem="false" desc="默认查询条件（和界面查询条件以及自定义查询条件，均是And关系，请不用配置相同字段的条件），查询时根据参数“全局属性-是否应用默认条件查询（isApplyDefaultQueryCondition）”设置是否应用。【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。value【默认值】为该条件的默认值。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;EXT1&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;=&quot;,&quot;value&quot;:&quot;1&quot;}]" ref=""/>  
+    <property action="edit" group="未读通知" name="unreadNotice-NUMBER-title" title="未读通知序号列标题" type="input" isSystem="false" desc="序号列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">序号</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-OWNER-title" title="未读通知来自列标题" type="input" isSystem="false" desc="来自列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">来自</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TITLE-title" title="未读通知标题列标题" type="input" isSystem="false" desc="标题列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">icon|标题</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TYPE-title" title="未读通知类型列标题" type="input" isSystem="false" desc="类型列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">类型</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-DATE-title" title="未读通知接收时间列标题" type="input" isSystem="false" desc="接收时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">接收时间</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-NUMBER-width" title="未读通知序号列宽度" type="input" isSystem="false" desc="序号列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-OWNER-width" title="未读通知来自列宽度" type="input" isSystem="false" desc="来自列宽度">80px</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TITLE-width" title="未读通知标题列宽度" type="input" isSystem="false" desc="标题列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">auto</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TYPE-width" title="未读通知类型列宽度" type="input" isSystem="false" desc="类型列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">150px</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-DATE-width" title="未读通知接收时间列宽度" type="input" isSystem="false" desc="接收时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-NUMBER-hidden" title="未读通知序号列是否隐藏" type="combox" isSystem="false" desc="序号列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-OWNER-hidden" title="未读通知来自列是否隐藏" type="combox" isSystem="false" desc="来自列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TITLE-hidden" title="未读通知标题列是否隐藏" type="combox" isSystem="false" desc="标题列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TYPE-hidden" title="未读通知类型列是否隐藏" type="combox" isSystem="false" desc="类型列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-DATE-hidden" title="未读通知接收时间列是否隐藏" type="combox" isSystem="false" desc="接收时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-NUMBER-index" title="未读通知序号列位置索引" type="input" isSystem="false" desc="序号列位置索引" ref="">1</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-OWNER-index" title="未读通知来自列位置索引" type="input" isSystem="false" desc="来自列位置索引">2</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TITLE-index" title="未读通知标题列位置索引" type="input" isSystem="false" desc="标题列位置索引">3</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-TYPE-index" title="未读通知类型列位置索引" type="input" isSystem="false" desc="类型列位置索引">4</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-DATE-index" title="未读通知接收时间列位置索引" type="input" isSystem="false" desc="接收时间列位置索引">5</property>  
+    <property action="edit" group="未读通知" name="unreadNotice-CustomCondition" title="未读通知自定义查询条件" type="textarea" isSystem="false" desc="自定义查询条件【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;BEGINTIME&quot;,&quot;title&quot;:&quot;开始时间&quot;,&quot;type&quot;:&quot;date&quot;,&quot;compare&quot;:&quot;=&quot;},{&quot;fieldName&quot;:&quot;TASKTITLE&quot;,&quot;title&quot;:&quot;任务标题&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;%&quot;}]" ref=""/>  
+    <property action="edit" group="未读通知" name="unreadNotice-DefaultQueryCondition" title="未读通知默认查询条件" type="textarea" isSystem="false" desc="默认查询条件（和界面查询条件以及自定义查询条件，均是And关系，请不用配置相同字段的条件），查询时根据参数isApplyDefaultQueryCondition设置是否应用。【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。value【默认值】为该条件的默认值。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;EXT1&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;=&quot;,&quot;value&quot;:&quot;1&quot;}]" ref=""/>  
+    <property action="edit" group="已办任务" name="history-NUMBER-index" title="已办任务序号列位置索引" type="input" isSystem="false" desc="序号列位置索引">1</property>  
+    <property action="edit" group="已办任务" name="history-OWNER-index" title="已办任务来自列位置索引" type="input" isSystem="false" desc="来自列位置索引">2</property>  
+    <property action="edit" group="已办任务" name="history-TITLE-index" title="已办任务标题列位置索引" type="input" isSystem="false" desc="标题列位置索引">3</property>  
+    <property action="edit" group="已办任务" name="history-TYPE-index" title="已办任务类型列位置索引" type="input" isSystem="false" desc="类型列位置索引">4</property>  
+    <property action="edit" group="已办任务" name="history-DATE-index" title="已办任务办理时间列位置索引" type="input" isSystem="false" desc="办理时间列位置索引">5</property>  
+    <property action="edit" group="已办任务" name="history-COSTTIME-index" title="已办任务耗时列位置索引" type="input" isSystem="false" desc="耗时列位置索引">6</property>  
+    <property action="edit" group="已办任务" name="history-STATE-index" title="已办任务状态列位置索引" type="input" isSystem="false" desc="状态列位置索引">7</property>  
+    <property action="edit" group="已办任务" name="history-TRACK-index" title="已办任务跟踪列位置索引" type="input" isSystem="false" desc="跟踪列位置索引">8</property>  
+    <property action="edit" group="已办任务" name="history-REVOKE-index" title="已办任务收回列位置索引" type="input" isSystem="false" desc="收回列位置索引">9</property>  
+    <property action="edit" group="已办任务" name="history-NUMBER-width" title="已办任务序号列宽度" type="input" isSystem="false" desc="序号列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="已办任务" name="history-OWNER-width" title="已办任务来自列宽度" type="input" isSystem="false" desc="来自列宽度">80px</property>  
+    <property action="edit" group="已办任务" name="history-TITLE-width" title="已办任务标题列宽度" type="input" isSystem="false" desc="标题列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">auto</property>  
+    <property action="edit" group="已办任务" name="history-TYPE-width" title="已办任务类型列宽度" type="input" isSystem="false" desc="类型列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">150px</property>  
+    <property action="edit" group="已办任务" name="history-DATE-width" title="已办任务办理时间列宽度" type="input" isSystem="false" desc="办理时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="已办任务" name="history-COSTTIME-width" title="已办任务耗时列宽度" type="input" isSystem="false" desc="耗时列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">80px</property>  
+    <property action="edit" group="已办任务" name="history-STATE-width" title="已办任务状态列宽度" type="input" isSystem="false" desc="状态列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">80px</property>  
+    <property action="edit" group="已办任务" name="history-TRACK-width" title="已办任务跟踪列宽度" type="input" isSystem="false" desc="跟踪列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="已办任务" name="history-REVOKE-width" title="已办任务收回列宽度" type="input" isSystem="false" desc="收回列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="已办任务" name="history-NUMBER-hidden" title="已办任务序号列是否隐藏" type="combox" isSystem="false" desc="序号列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-OWNER-hidden" title="已办任务来自列是否隐藏" type="combox" isSystem="false" desc="来自列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-TITLE-hidden" title="已办任务标题列是否隐藏" type="combox" isSystem="false" desc="标题列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-TYPE-hidden" title="已办任务类型列是否隐藏" type="combox" isSystem="false" desc="类型列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-DATE-hidden" title="已办任务办理时间列是否隐藏" type="combox" isSystem="false" desc="办理时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-COSTTIME-hidden" title="已办任务耗时列是否隐藏" type="combox" isSystem="false" desc="耗时列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-STATE-hidden" title="已办任务状态列是否隐藏" type="combox" isSystem="false" desc="状态列是否隐藏" ref="true|false">true</property>  
+    <property action="edit" group="已办任务" name="history-TRACK-hidden" title="已办任务跟踪列是否隐藏" type="combox" isSystem="false" desc="跟踪列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-REVOKE-hidden" title="已办任务收回列是否隐藏" type="combox" isSystem="false" desc="收回列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="history-NUMBER-title" title="已办任务序号列标题" type="input" isSystem="false" desc="序号列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">序号</property>  
+    <property action="edit" group="已办任务" name="history-OWNER-title" title="已办任务来自列标题" type="input" isSystem="false" desc="来自列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">来自</property>  
+    <property action="edit" group="已办任务" name="history-TITLE-title" title="已办任务标题列标题" type="input" isSystem="false" desc="标题列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">icon|标题</property>  
+    <property action="edit" group="已办任务" name="history-TYPE-title" title="已办任务类型列标题" type="input" isSystem="false" desc="类型列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">类型</property>  
+    <property action="edit" group="已办任务" name="history-DATE-title" title="已办任务办理时间列标题" type="input" isSystem="false" desc="办理时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">办理时间</property>  
+    <property action="edit" group="已办任务" name="history-COSTTIME-title" title="已办任务耗时列标题" type="input" isSystem="false" desc="耗时列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">耗时</property>  
+    <property action="edit" group="已办任务" name="history-STATE-title" title="已办任务状态列标题" type="input" isSystem="false" desc="状态列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">状态</property>  
+    <property action="edit" group="已办任务" name="history-TRACK-title" title="已办任务跟踪列标题" type="input" isSystem="false" desc="跟踪列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">跟踪</property>  
+    <property action="edit" group="已办任务" name="history-REVOKE-title" title="已办任务收回列标题" type="input" isSystem="false" desc="收回列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">收回</property>  
+    <property action="edit" group="已办任务" name="history-CustomCondition" title="已办任务自定义查询条件" type="textarea" isSystem="false" desc="自定义查询条件【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;BEGINTIME&quot;,&quot;title&quot;:&quot;开始时间&quot;,&quot;type&quot;:&quot;date&quot;,&quot;compare&quot;:&quot;=&quot;},{&quot;fieldName&quot;:&quot;TASKTITLE&quot;,&quot;title&quot;:&quot;任务标题&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;%&quot;}]&lt;br&gt;" ref="">[{"fieldName":"BEGINTIME","title":"开始时间","type":"date","compare":"="},{"fieldName":"TASKTITLE","title":"任务标题","type":"text","compare":"%"}]</property>  
+    <property action="edit" group="已办任务" name="history-DefaultQueryCondition" title="已办任务默认查询条件" type="textarea" isSystem="false" desc="默认查询条件（和界面查询条件以及自定义查询条件，均是And关系，请不用配置相同字段的条件），查询时根据参数isApplyDefaultQueryCondition设置是否应用。【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。value【默认值】为该条件的默认值。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;EXT1&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;=&quot;,&quot;value&quot;:&quot;1&quot;}]" ref=""/>  
+    <property action="edit" group="已办任务" name="isHideRepetitiveHistoryTask" title="同一节点重复的已办是否隐藏" type="combox" isSystem="false" desc="同一节点重复的已办是否隐藏（优先级高于参数：同一流程重复的已办是否隐藏）" ref="true|false">false</property>  
+    <property action="edit" group="已办任务" name="isHideRepetitiveHistoryTaskOfProcess" title="同一流程重复的已办是否隐藏" type="combox" isSystem="false" desc="同一流程重复的已办是否隐藏（优先级低于参数：同一节点重复的已办是否隐藏）" ref="true|false">true</property>  
+    <property action="edit" group="通知查询" name="notice-NUMBER-hidden" title="通知查询序号列是否隐藏" type="combox" isSystem="false" desc="序号列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="通知查询" name="notice-OWNER-hidden" title="通知查询来自列是否隐藏" type="combox" isSystem="false" desc="来自列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="通知查询" name="notice-TITLE-hidden" title="通知查询标题列是否隐藏" type="input" isSystem="false" desc="标题列是否隐藏">false</property>  
+    <property action="edit" group="通知查询" name="notice-TYPE-hidden" title="通知查询类型列是否隐藏" type="combox" isSystem="false" desc="类型列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="通知查询" name="notice-DATE-hidden" title="通知查询接收时间列是否隐藏" type="combox" isSystem="false" desc="接收时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="通知查询" name="notice-READTIME-hidden" title="通知查询阅读时间列是否隐藏" type="combox" isSystem="false" desc="阅读时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="通知查询" name="notice-NUMBER-index" title="通知查询序号列位置索引" type="input" isSystem="false" desc="序号列位置索引">1</property>  
+    <property action="edit" group="通知查询" name="notice-OWNER-index" title="通知查询来自列位置索引" type="input" isSystem="false" desc="来自列位置索引">2</property>  
+    <property action="edit" group="通知查询" name="notice-TITLE-index" title="通知查询标题列位置索引" type="input" isSystem="false" desc="标题列位置索引">3</property>  
+    <property action="edit" group="通知查询" name="notice-TYPE-index" title="通知查询类型列位置索引" type="input" isSystem="false" desc="类型列位置索引">4</property>  
+    <property action="edit" group="通知查询" name="notice-DATE-index" title="通知查询接收时间列位置索引" type="input" isSystem="false" desc="接收时间列位置索引">5</property>  
+    <property action="edit" group="通知查询" name="notice-READTIME-index" title="通知查询阅读时间列位置索引" type="input" isSystem="false" desc="阅读时间列位置索引">6</property>  
+    <property action="edit" group="通知查询" name="notice-NUMBER-width" title="通知查询序号列宽度" type="input" isSystem="false" desc="序号列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="通知查询" name="notice-OWNER-width" title="通知查询来自列宽度" type="input" isSystem="false" desc="来自列宽度">80px</property>  
+    <property action="edit" group="通知查询" name="notice-TITLE-width" title="通知查询标题列宽度" type="input" isSystem="false" desc="标题列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">auto</property>  
+    <property action="edit" group="通知查询" name="notice-TYPE-width" title="通知查询类型列宽度" type="input" isSystem="false" desc="类型列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">150px</property>  
+    <property action="edit" group="通知查询" name="notice-DATE-width" title="通知查询接收时间列宽度" type="input" isSystem="false" desc="接收时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="通知查询" name="notice-READTIME-width" title="通知查询阅读时间列宽度" type="input" isSystem="false" desc="阅读时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="通知查询" name="notice-NUMBER-title" title="通知查询序号列标题" type="input" isSystem="false" desc="序号列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">序号</property>  
+    <property action="edit" group="通知查询" name="notice-OWNER-title" title="通知查询来自列标题" type="input" isSystem="false" desc="来自列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">来自</property>  
+    <property action="edit" group="通知查询" name="notice-TITLE-title" title="通知查询标题列标题" type="input" isSystem="false" desc="标题列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">icon|标题</property>  
+    <property action="edit" group="通知查询" name="notice-TYPE-title" title="通知查询类型列标题" type="input" isSystem="false" desc="类型列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">类型</property>  
+    <property action="edit" group="通知查询" name="notice-DATE-title" title="通知查询接收时间列标题" type="input" isSystem="false" desc="接收时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">接收时间</property>  
+    <property action="edit" group="通知查询" name="notice-READTIME-title" title="通知查询阅读时间列标题" type="input" isSystem="false" desc="阅读时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">阅读时间</property>  
+    <property action="edit" group="通知查询" name="notice-CustomCondition" title="通知查询自定义查询条件" type="textarea" isSystem="false" desc="自定义查询条件【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;BEGINTIME&quot;,&quot;title&quot;:&quot;开始时间&quot;,&quot;type&quot;:&quot;date&quot;,&quot;compare&quot;:&quot;=&quot;},{&quot;fieldName&quot;:&quot;TASKTITLE&quot;,&quot;title&quot;:&quot;任务标题&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;%&quot;}]" ref=""/>  
+    <property action="edit" group="通知查询" name="notice-DefaultQueryCondition" title="通知查询默认查询条件" type="textarea" isSystem="false" desc="默认查询条件（和界面查询条件以及自定义查询条件，均是And关系，请不用配置相同字段的条件），查询时根据参数isApplyDefaultQueryCondition设置是否应用。【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。value【默认值】为该条件的默认值。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;EXT1&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;=&quot;,&quot;value&quot;:&quot;1&quot;}]" ref=""/>  
+    <property action="edit" group="发起跟踪" name="track-NUMBER-hidden" title="发起跟踪序号列是否隐藏" type="combox" isSystem="false" desc="序号列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-TITLE-hidden" title="发起跟踪标题列是否隐藏" type="combox" isSystem="false" desc="标题列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-TYPE-hidden" title="发起跟踪类型列是否隐藏" type="combox" isSystem="false" desc="类型列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-DATE-hidden" title="发起跟踪创建时间列是否隐藏" type="combox" isSystem="false" desc="创建时间列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-TRACK-hidden" title="发起跟踪跟踪列是否隐藏" type="combox" isSystem="false" desc="跟踪列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-REVOCATION-hidden" title="发起跟踪撤销列是否隐藏" type="combox" isSystem="false" desc="撤销列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-REMINDERS-hidden" title="发起跟踪催办列是否隐藏" type="combox" isSystem="false" desc="催办列是否隐藏" ref="true|false">false</property>  
+    <property action="edit" group="发起跟踪" name="track-NUMBER-width" title="发起跟踪序号列宽度" type="input" isSystem="false" desc="序号列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="发起跟踪" name="track-TITLE-width" title="发起跟踪标题列宽度" type="input" isSystem="false" desc="标题列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">auto</property>  
+    <property action="edit" group="发起跟踪" name="track-TYPE-width" title="发起跟踪类型列宽度" type="input" isSystem="false" desc="类型列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">150px</property>  
+    <property action="edit" group="发起跟踪" name="track-DATE-width" title="发起跟踪创建时间列宽度" type="input" isSystem="false" desc="创建时间列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">110px</property>  
+    <property action="edit" group="发起跟踪" name="track-TRACK-width" title="发起跟踪跟踪列宽度" type="input" isSystem="false" desc="跟踪列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="发起跟踪" name="track-REVOCATION-width" title="发起跟踪撤销列宽度" type="input" isSystem="false" desc="撤销列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">40px</property>  
+    <property action="edit" group="发起跟踪" name="track-REMINDERS-width" title="发起跟踪催办列宽度" type="input" isSystem="false" desc="催办列宽度：宽度，自动宽度：auto，相对宽度：20%，固定宽度：120px">80px</property>  
+    <property action="edit" group="发起跟踪" name="track-NUMBER-index" title="发起跟踪序号列位置索引" type="input" isSystem="false" desc="序号列位置索引">1</property>  
+    <property action="edit" group="发起跟踪" name="track-TITLE-index" title="发起跟踪来标题位置索引" type="input" isSystem="false" desc="标题列位置索引">3</property>  
+    <property action="edit" group="发起跟踪" name="track-TYPE-index" title="发起跟踪类型列位置索引" type="input" isSystem="false" desc="类型列位置索引">4</property>  
+    <property action="edit" group="发起跟踪" name="track-DATE-index" title="发起跟踪创建时间列位置索引" type="input" isSystem="false" desc="创建时间列位置索引">5</property>  
+    <property action="edit" group="发起跟踪" name="track-TRACK-index" title="发起跟踪跟踪列位置索引" type="input" isSystem="false" desc="跟踪列位置索引">6</property>  
+    <property action="edit" group="发起跟踪" name="track-REMINDERS-index" title="发起跟踪催办列位置索引" type="input" isSystem="false" desc="催办列位置索引">7</property>  
+    <property action="edit" group="发起跟踪" name="track-REVOCATION-index" title="发起跟踪撤销列位置索引" type="input" isSystem="false" desc="撤销列位置索引">8</property>  
+    <property action="edit" group="发起跟踪" name="track-NUMBER-title" title="发起跟踪序号列标题" type="input" isSystem="false" desc="序号列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">序号</property>  
+    <property action="edit" group="发起跟踪" name="track-TITLE-title" title="发起跟踪标题列标题" type="input" isSystem="false" desc="来自列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">标题</property>  
+    <property action="edit" group="发起跟踪" name="track-TYPE-title" title="发起跟踪类型列标题" type="input" isSystem="false" desc="类型列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">类型</property>  
+    <property action="edit" group="发起跟踪" name="track-DATE-title" title="发起跟踪创建时间列标题" type="input" isSystem="false" desc="创建时间列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">创建时间</property>  
+    <property action="edit" group="发起跟踪" name="track-TRACK-title" title="发起跟踪跟踪列标题" type="input" isSystem="false" desc="跟踪列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">跟踪</property>  
+    <property action="edit" group="发起跟踪" name="track-REMINDERS-title" title="发起跟踪催办列标题" type="input" isSystem="false" desc="催办列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">催办</property>  
+    <property action="edit" group="发起跟踪" name="track-REVOCATION-title" title="发起跟踪撤销列标题" type="input" isSystem="false" desc="撤销列标题：列标题，如果使用icon|形式开头，该列将显示一个图标">撤销</property>  
+    <property action="edit" group="发起跟踪" name="track-CustomCondition" title="发起跟踪自定义查询条件" type="textarea" isSystem="false" desc="自定义查询条件【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;STARTTIME&quot;,&quot;title&quot;:&quot;开始时间&quot;,&quot;type&quot;:&quot;date&quot;,&quot;compare&quot;:&quot;=&quot;},{&quot;fieldName&quot;:&quot;PROCESSTITLE&quot;,&quot;title&quot;:&quot;流程名称&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;%&quot;}]" ref=""/>  
+    <property action="edit" group="发起跟踪" name="track-DefaultQueryCondition" title="发起跟踪默认查询条件" type="textarea" isSystem="false" desc="默认查询条件（和界面查询条件以及自定义查询条件，均是And关系，请不用配置相同字段的条件），查询时根据参数isApplyDefaultQueryCondition设置是否应用。【字段类型】type包含文本、数值、日期，对应的值为：text,number,date。 fieldName【字段名称】值必须是对应数据表中存在的字段名。通知查询、已办任务对应wfh_task表，未读通知、待办任务对应wfc_task表，发起跟踪对应wfc_process表。compare【比较运算符】的值为：&quot;&gt;&quot;,&quot;&lt;&quot;,&quot;=&quot;,&quot;%&quot;。value【默认值】为该条件的默认值。每个查询条件封装成一个json对象,多个查询条件之间用英文','隔开&lt;br&gt;格式示例：[{&quot;fieldName&quot;:&quot;EXT1&quot;,&quot;type&quot;:&quot;text&quot;,&quot;compare&quot;:&quot;=&quot;,&quot;value&quot;:&quot;1&quot;}]" ref=""/>  
+    <property action="edit" group="移动端扩展" name="topButtons" title="右上角扩展按钮" type="textarea" isSystem="false" desc="移动端右上角扩展按钮，值是一个JSONArray结构：&lt;br&gt;[{&lt;br&gt;  &quot;buttonName&quot;:&quot;抢单&quot;, //按钮名称&lt;br&gt;  &quot;action&quot;:&quot;openUrl&quot;, //可取值：openUrl，refreshTodoTask。 openUrl代表用webview打开一个web页面，refreshTodoTask代表发送请求后刷新待办列表&lt;br&gt;  &quot;url&quot;:&quot;http://...&quot; ,//action为openUrl时，webview打开该页面；action为refreshTodoTask时，向该地址发送请求，result为ok时刷新待办列表&lt;br&gt;}&lt;br&gt;{&lt;br&gt;  &quot;buttonName&quot;:&quot;发起&quot;,&lt;br&gt;  &quot;action&quot;:&quot;refreshTodoTask&quot;, //可取值：openUrl，refreshTodoTask。 openUrl代表用webview打开一个web页面，refreshTodoTask代表刷新待办列表&lt;br&gt;  &quot;url&quot;:&quot;http://...&quot;,//action为openUrl时，webview打开该页面；action为refreshTodoTask时，向该地址发送请求，result为ok时刷新待办列表&lt;br&gt;}]&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;如果action的值是refreshTodoTask， 请求后应返回如下json结构：&lt;br&gt;{&lt;br&gt;&lt;br&gt;&quot;result&quot;:&quot;ok&quot;//ok代表成功， error代表失败&lt;br&gt;&quot;msg&quot;:&quot;&quot; //结果信息，如果不为空，则在手机端弹出提示。成功的提示信息弹出后自动消失，失败的信息需要点击确定才消失&lt;br&gt;}"/>  
+    <property action="edit" group="移动端扩展" name="bottomButtons" title="底部导航扩展按钮" type="textarea" isSystem="false" desc="移动端底部导航扩展按钮，值是一个JSONArray结构：&lt;br&gt;[{&lt;br&gt;  &quot;buttonName&quot;:&quot;抢单&quot;, //按钮名称&lt;br&gt;  &quot;buttonIcon&quot;:&quot;http://...&quot;, //按钮图标地址&lt;br&gt;  &quot;action&quot;:&quot;openUrl&quot;, //可取值：openUrl，refreshTodoTask。 openUrl代表用webview打开一个web页面，refreshTodoTask代表发送请求后刷新待办列表&lt;br&gt;  &quot;url&quot;:&quot;http://...&quot; ,//action为openUrl时，webview打开该页面；action为refreshTodoTask时，向该地址发送请求，result为ok时刷新待办列表&lt;br&gt;}&lt;br&gt;{&lt;br&gt;  &quot;buttonName&quot;:&quot;发起&quot;,&lt;br&gt;  &quot;buttonIcon&quot;:&quot;http://...&quot;, //按钮图标地址&lt;br&gt;  &quot;action&quot;:&quot;refreshTodoTask&quot;, //可取值：openUrl，refreshTodoTask。 openUrl代表用webview打开一个web页面，refreshTodoTask代表刷新待办列表&lt;br&gt;  &quot;url&quot;:&quot;http://...&quot;,//action为openUrl时，webview打开该页面；action为refreshTodoTask时，向该地址发送请求，result为ok时刷新待办列表&lt;br&gt;}]&lt;br&gt;&lt;br&gt;如果action的值是refreshTodoTask， 请求后应返回如下json结构：&lt;br&gt;{&lt;br&gt;&lt;br&gt;&quot;result&quot;:&quot;ok&quot;//ok代表成功， error代表失败&lt;br&gt;&quot;msg&quot;:&quot;&quot; //结果信息，如果不为空，则在手机端弹出提示。成功的提示信息弹出后自动消失，失败的信息需要点击确定才消失&lt;br&gt;}" ref="">[ { "buttonName": "发起流程", "buttonIcon": "/apps/com.actionsoft.apps.workbench/img/plus.png", "url": "cmd=com.actionsoft.apps.workbench_mobile_start_grouping_list_page", "action": "openUrl" }]</property>  
+    <property action="edit" group="移动端扩展" name="showLeftIcon" title="显示左侧图标" type="combox" isSystem="false" desc="是否显示左侧图标" ref="true|false">true</property>  
+    <property action="edit" group="移动端扩展" name="leftIconConfig" title="待办任务左侧图标扩展" type="textarea" isSystem="false" desc="定义待办任务左侧图标如何显示，内容是一组条件列表（JSONArray），按优先级排序，每个条件包含四个字段：&lt;br&gt;key: 对应待办任务中的某个属性&lt;br&gt;value： key对应的value&lt;br&gt;compare：可取值=，&gt; ，&lt; ，eq。eq用来做字符串相等比较，同java的equal方法&lt;br&gt;iconUrl： 图标地址。待办任务中获取key字段的值，该值与value相同时，即使用该图标地址。&lt;br&gt;移动端会遍历该条件，一旦发现满足条件就停止遍历，并应用该条件的iconUrl。示例：&lt;br&gt;[&lt;br&gt;    {&lt;br&gt;        &quot;key&quot;: &quot;delayTimes&quot;,&lt;br&gt;        &quot;value&quot;: 10000,&lt;br&gt;        &quot;compare&quot;:&quot;&gt;&quot;,&lt;br&gt;        &quot;iconUrl&quot;: &quot;/apps/com.actionsoft.apps.workbench/img/remind.png&quot;&lt;br&gt;    }&lt;br&gt;]&lt;br&gt;平台默认提供一组待办任务的属性作为key的可取值，如果平台默认提供的属性不能满足需求，可实现待办任务扩展列，用WorkbenchColumnModel的name属性的值作为key值。&lt;br&gt;下面是平台默认提供的属性：&lt;br&gt;EAITask            是否EAI任务&lt;br&gt;ownerDepartment    上个办理人所在部门&lt;br&gt;beginTime          任务到达时间&lt;br&gt;ownerName          上个办理人名称&lt;br&gt;taskInsTitle       任务实例标题&lt;br&gt;taskTitle          任务名称&lt;br&gt;remindTimes        催办次数&lt;br&gt;delayTimes         任务超时时间，以毫秒计&lt;br&gt;processRemindTimes 流程催办次数&lt;br&gt;processCreateUser  流程发起人&lt;br&gt;processExpireTime  流程超时时间&lt;br&gt;isSubProcess       是否子流程&lt;br&gt;isRead             任务是否已读      &lt;br&gt;&lt;br&gt;">[ { "key": "remindTimes", "value": 0, "compare":"&gt;", "iconUrl": "/apps/com.actionsoft.apps.workbench/img/remind.png" } ]</property>  
+    <property action="edit" group="移动端扩展" name="rightCornerIconConfig" title="待办任务主标题图标扩展" type="textarea" isSystem="false" desc="定义待办任务主标题右边图标如何显示，内容是一组条件列表（JSONArray），按优先级排序，每个条件包含四个字段：&lt;br&gt;key: 对应待办任务中的某个属性， 可取值同待办任务左侧图标扩展可取值&lt;br&gt;value： key对应的value&lt;br&gt;compare：可取值=，&gt; ，&lt; ，eq。eq用来做字符串相等比较，同java的equal方法&lt;br&gt;iconUrl： 图标地址。待办任务中获取key字段的值，该值与value相同时，即使用该图标地址。&lt;br&gt;移动端会遍历该条件，显示所有满足条件的图标。示例：&lt;br&gt;[&lt;br&gt;    {&lt;br&gt;        &quot;key&quot;: &quot;delayTimes&quot;,&lt;br&gt;        &quot;value&quot;: 10000,&lt;br&gt;        &quot;compare&quot;:&quot;&gt;&quot;,&lt;br&gt;        &quot;iconUrl&quot;: &quot;/apps/com.actionsoft.apps.workbench/img/remind.png&quot;&lt;br&gt;    }&lt;br&gt;]&lt;br&gt;"/>  
+    <property action="edit" group="移动端扩展" name="titleExpress" title="主标题扩展" type="textarea" isSystem="false" desc="定义主标题如何显示，由@key 组成, 平台自动将@key替换为key对应的值。 示例：(@taskTitle)@taskInsTitle， 最终会显示为  (节点名称)任务实例名称 。key的可取值同待办任务左侧图标扩展可取值。"/>  
+    <property action="edit" group="移动端扩展" name="subTitleExpress" title="副标题扩展" type="textarea" isSystem="false" desc="定义副标题如何显示，由@key 组成, 平台自动将@key替换为key对应的值。 示例： @ownerName | @ownerDepartment， 最终会显示为  上个办理人名称  |  上个办理人部门名称。key的可取值同待办任务左侧图标扩展可取值。">@ownerName | @ownerDepartment</property>  
+    <property action="edit" group="移动端设置" name="debug" title="调试模式" type="combox" isSystem="false" desc="是否打开移动端调试模式" ref="true|false">false</property>  
+    <property action="edit" group="移动端设置" name="wpsAppKey" title="WPS App Key" type="input" isSystem="false" desc="WPS App Key， 该属性不为空时，在移动端流程中心打开表单，当表单附件是可编辑状态时，可直接使用WPS在线打开文档进行编辑保存，仅支持word excle ppt格式文件，且要求手机端必须安装WPS Office软件" ref=""/>  
+    <property action="hidden" group="移动端过滤" name="mobile_start_processnodeids" title="移动端展示特定流程节点的任务" type="textarea" isSystem="false" desc="在移动端“草稿”列表中，控制指定流程节点的任务显示。填写流程定义模型的节点ID，多个用英文半角逗号隔开" ref=""/>  
+    <property action="hidden" group="移动端过滤" name="mobile_notstart_processnodeids" title="移动端过滤特定流程节点的任务" type="textarea" isSystem="false" desc="在移动端“待办”列表中，控制不显示在列表中显示的任务实例。填写流程定义模型的节点ID，多个用英文半角逗号隔开" ref=""/>  
+    <property action="hidden" group="移动端过滤" name="show-pc-only" title="移动端排除指定的流程相关实例" type="textarea" isSystem="false" desc="在待办列表中，排除指定的流程定义ID的任务实例数据。填写流程定义ID，如果流程有多个版本只需要填写版本ID，多个用英文半角逗号隔开" ref=""/>  
+    <property action="edit" group="全局属性" name="custom-task-url" title="打开任务自定义链接" type="textarea" isSystem="false" desc="自定义打开任务的url，重写CMD自定义实现，URL格式如下：&lt;br&gt;?sid=$sid&amp;cmd=CLIENT_BPM_FORM_MAIN_PAGE_OPEN&amp;processInstId=$processInstId&amp;taskInstId=$taskInstId&amp;openState=$openState" ref=""/>  
+    <property action="edit" group="全局属性" name="taskTitle-isHasTaskname" title="任务标题是否显示节点名称" type="combox" isSystem="false" desc="任务标题是否显示节点名称，针对待办任务和已办任务有效" ref="显示:true|隐藏:false">true</property>  
+    <property action="hidden" group="全局属性" name="notification-extend-event" title="新任务到达扩展功能" type="input" isSystem="false" desc="新任务到达扩展功能的实现类，类的注册格式为：AppId:类的全路径，注意使用英文冒号分隔，该类需实现com.actionsoft.bpms.client.workbench.WorkbenchNotificationExtendInterface接口" ref=""/>  
+    <property action="edit" group="已办任务" name="isShowDelegateHistoryTask" title="是否显示他人委托的已办" type="combox" isSystem="false" desc="是否显示他人委托我办理的历史任务，默认不显示。如果开启该开关，在千万级大数据量下会影响查询性能" ref="true|false">false</property>  
+    <property action="edit" group="全局属性" name="special-filter-type" title="过滤特定流程组ID选项" type="combox" isSystem="false" desc="过滤特定流程组产生的任务实例，如在工作台显示或者隐藏。默认不过滤" ref="不过滤:0|只显示指定的流程组任务实例:1|不显示指定的流程组任务实例:2">0</property>  
+    <property action="edit" group="全局属性" name="special-processGroupId" title="过滤特定流程组ID" type="input" isSystem="false" desc="流程组Id，多个逗号隔开。配合相关的选项开关来使用" ref=""/>  
+    <property action="edit" group="已办任务" name="controlStateFilter" title="已办任务是否过滤控制状态" type="combox" isSystem="false" desc="已办任务是否过滤控制状态，默认情况下，只显示完成的任务，删除的，取消的等状态不显示" ref="只显示完成的任务:0|全部显示:1"/>  
+    <property action="edit" group="全局属性" name="mobile_processCenter_sortRule" title="手机流程中心排序规则" type="textarea" isSystem="false" desc="" ref="">[]</property>  
+    <property action="edit" group="全局属性" name="bubbleCountingMethod" title="待办任务、未阅通知气泡数量计数方式" type="combox" isSystem="false" desc="" ref="任务中的未读数据:0|任务中的所有数据:1">0</property>  
+    <property action="edit" group="企业微信" name="processNavDatas" title="流程目录列表数据" type="textarea" isSystem="false" desc="流程列表展示参数配置。配置格式json数组,按照:[{&quot;groupTitle&quot;:&quot;列表分类标题&quot;,&quot;datas&quot;:&quot;该分类下的流程目录数据，json数组格式:[{&quot;title&quot;:&quot;目录名称&quot;,&quot;icon&quot;:&quot;目录图标路径，格式参考示例&quot;,&quot;url&quot;:&quot;目录链接跳转地址，格式参考示例&quot;,&quot;numAtFormula&quot;:&quot;气泡@公式，展示对应目录信息的个数，非必填，参考下方说明&quot;,&quot;numBackgroundColor&quot;:&quot;气泡背景颜色值，建议使用十六进制值&quot;}]&quot;}]。&lt;br&gt;示例： [{&quot;groupTitle&quot;:&quot;流程中心&quot;,&quot;datas&quot;:[{&quot;title&quot;:&quot;待办任务&quot;,&quot;icon&quot;:&quot;../apps/com.actionsoft.apps.workbench/img/index/ic_25.png&quot;,&quot;url&quot;:&quot;./w?sid=@sid&amp;cmd=com.actionsoft.apps.workbench_mobile_h5_list_page&amp;displayNav=show&amp;listType=todo&quot;,&quot;numAtFormula&quot;:&quot;@getTodoTaskNum(@uid)&quot;,&quot;numBackgroundColor&quot;:&quot;#fdd&quot;}]},{&quot;groupTitle&quot;:&quot;分类2&quot;,&quot;datas&quot;:[{&quot;title&quot;:&quot;委托设置&quot;,&quot;icon&quot;:&quot;../apps/com.actionsoft.apps.workbench/img/index/ic_29.png&quot;,&quot;url&quot;:&quot;./w?sid=@sid&amp;cmd=com.actionsoft.apps.workbench_mobile_h5_delegation_page&quot;}]}]&lt;br&gt;参数说明：1、@公式非必填，工作台目前支持：@getTodoTaskNum(@uid)待办任务数，@getHistoryTaskNum(@uid)已办任务数，@getMyCreateTaskNum(@uid)我发起的任务数量。客户可以填写自己注册实现的@公式。numBackgroundColor配合该参数渲染背景，均为非必填项。&lt;br&gt;2、url:目录点击跳转地址，格式如：./w?sid=@sid&amp;cmd=com.actionsoft.apps.workbench_mobile_h5_list_page&amp;displayNav=show&lt;br&gt;&lt;br&gt;" ref=""/>  
+    <property action="edit" group="企业微信" name="ifShowH5Apps" title="是否展示H5应用" type="combox" isSystem="false" desc="控制是否展示h5应用列表，false 不展示，true 展示。默认true 展示" ref="false|true">true</property>  
+    <property action="edit" group="企业微信" name="bannerConfig" title="工作台Banner配置" type="textarea" isSystem="false" desc="工作页面横幅配置,值为json数组结构：&lt;br&gt;[ { &quot;bannerUrl&quot;:&quot;图片地址&quot;, &quot;bannerLink&quot;:&quot;点击图片跳转的地址&quot;}]&lt;br&gt;&lt;br&gt;图片大小1080x435， 图片地址和跳转地址可以为相对地址， 也可以是完整地址， 示例:&lt;br&gt;&lt;br&gt;[{&quot;bannerUrl&quot;:&quot;../apps/com.actionsoft.apps.byod.helper/images/banner.png&quot;, &quot;bannerLink&quot;:&quot;../r/w?cmd=xxx&quot;}, &lt;br&gt;{&quot;bannerUrl&quot;:&quot;http://xxx/xxx.png&quot;, &quot;bannerLink&quot;:&quot;http://www.baidu.com&quot;} ]" ref="">[{"bannerUrl":"../apps/com.actionsoft.apps.workbench/img/index/banner.jpg", "bannerLink":""} ]</property>  
+    <property action="edit" group="企业微信" name="h5title" title="页面标题" type="input" isSystem="false" desc="页面标题" ref="false|true">流程中心</property>  
+    <property action="edit" group="XPage" name="xpageType" title="XPage注册页面" type="combox" isSystem="false" desc="TAB页签:XPages配置流程中心小页面时，可直接单独配置“我的待办”、“我的发起”、“我的已办”的内容小窗口&lt;br&gt;折叠:XPages配置流程中心小页面时，直接返回一个包括“我的待办”、“我的发起”的可折叠的内置页面" ref="TAB页签:0|折叠:1">0</property>  
+    <property action="edit" group="移动端设置" name="mobileNotificationFilter" title="过滤移动通知范围" type="textarea" isSystem="false" desc="可以设置人员或者部门，英文半角逗号分隔，设置后，被设置的范围不接收移动通知。" ref=""/>  
+    <property action="edit" group="全局属性" name="ready_showTotal" title="加载时统计未读任务和未阅通知" type="combox" isSystem="false" desc="" ref="开启:true|关闭:false">false</property>  
+    <property action="edit" group="全局属性" name="bubbleClickCounting" title="待办任务气泡数量计数频率" type="combox" isSystem="false" desc="" ref="点击时查询所有菜单气泡数量:false|点击时仅查询此菜单气泡数量:true">false</property>  
+    <property action="edit" group="全局属性" name="delegationIfShowProcessNode" title="委托设置是否显示流程节点按钮" type="combox" isSystem="false" desc="控制委托设置界面流程节点按钮的展示。默认显示" ref="显示:true|不显示:false">true</property>  
+    <property action="edit" group="全局属性" name="isShowDraftTab" title="草稿任务是否显示在单独的Tab页面" type="combox" isSystem="false" desc="设为不显示时，则草稿任务显示在待办任务中。默认不显示" ref="显示:true|不显示:false">false</property>  
+    <property action="hidden" group="移动端设置" name="MAIN_ADMIN" title="主管理员ID" type="input" isSystem="false" desc="主管理员" ref=""/>  
+    <property action="edit" group="移动端设置" name="mobileTitle" title="移动端首页标题" type="input" isSystem="false" desc="移动端首页标题" ref="">首页</property>  
+    <property action="edit" group="全局属性" name="wx-corpid" title="用于微信服务的企业号ID" type="input" isSystem="false" desc="监听全局流程事件，启用“新任务到达提醒”的时候，并且安装“企业微信管理开发平台”App时，将会发送微信消息，如果该值为空，则不发送。注意：该参数要在notification-new-task参数启用后生效" ref=""/>  
+    <property action="edit" group="全局属性" name="agentId" title="用于发送微信消息时的企业号应用agentId" type="input" isSystem="false" desc="微信企业号应用agentId可以从微信企业号管理控制台中获取。注意：该参数要在notification-new-task参数启用后生效" ref=""/>  
+    <property action="edit" group="全局属性" name="dd-corpid" title="用于发送钉钉通知时的CorpId" type="input" isSystem="false" desc="监听全局流程事件，启用“新任务到达提醒”的时候，并且安装“钉钉集成”App时，将会发送钉钉通知，如果该值为空，则不发送。注意：该参数要在notification-new-task参数启用后生效" ref=""/>  
+    <property action="edit" group="全局属性" name="dd-agentId" title="用于发送钉钉通知时的企业应用agentId" type="input" isSystem="false" desc="钉钉企业应用agentId可以从钉钉管理控制台中获取。注意：该参数要在notification-new-task参数启用后生效" ref=""/>  
+    <property action="edit" group="企业微信" name="workbenchBannerUrl" title="工作台Banner地址链接" type="input" isSystem="false" desc="banner链接地址。数据为空时，默认为：../apps/com.actionsoft.apps.workbench/img/index/banner.jpg" ref=""/>  
+    <property action="edit" group="全局属性" name="history_rds_cc_id" title="已办查询RDS CC 模型ID" type="input" isSystem="false" desc="" ref="">e47da842-f661-46fa-b63a-42faeec54509</property> 
+  </properties>  
+  <productId>00000000000000000000000000000000</productId>  
+  <icon code="&amp;#xe665;" color="#ff9421"/>  
+  <deployment> 
+    <system id="obj_00093403df6a17ed729913d64f48f930" icon16="../commons/img/home_16.png" icon64="../commons/img/home_64.png" icon96="../commons/img/home_96.png" notifier="" name="%u529E%u516C" target="leftFrame" url="/" deployUrlType="2" source="0" appId="com.actionsoft.apps.workbench"> 
+      <directory id="obj_677b85287e6a492a91925b57cf34ef96" icon16="../commons/img/user_20.png" icon64="" icon96="" notifier="" name="%u5E38%u7528" target="mainFrame" url="/" deployUrlType="2" source="0" orderIndex="1" appId="com.actionsoft.apps.workbench"> 
+        <function id="obj_c867594519be463faadfe4e4a9aa25d1" icon16="&amp;#xe665;|#ff9421" icon64="../apps/com.actionsoft.apps.workbench/img/icon64.png" icon96="../apps/com.actionsoft.apps.workbench/img/icon96.png" notifier="com.actionsoft.apps.workbench.notification.WorkbenchPortletNotifier" name="%u6D41%u7A0B%u4E2D%u5FC3" target="mainFrame" url="./w?sid=@sid&amp;cmd=com.actionsoft.apps.workbench_main_page" deployUrlType="2" source="0" orderIndex="1" appId="com.actionsoft.apps.workbench"/> 
+      </directory> 
+    </system> 
+  </deployment>  
+  <suspend>false</suspend>  
+  <releaseDate>2023-07-04</releaseDate>  
+  <upgradeDate>2023-07-04 15:15:16</upgradeDate> 
+</app>

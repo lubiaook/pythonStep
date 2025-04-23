@@ -1,41 +1,50 @@
-import requests
-from lxml import etree
-import os
+from flask import Flask, jsonify
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+
+app = Flask(__name__)
+
+
+@app.route('/get_data/<page>', methods=['GET'])
+def get_data(page):
+    url = "https://quote.eastmoney.com/qihuo/" + page
+    print(url)
+    # 设置 Chrome 驱动器路径
+    chrome_driver_path = './chromedriver'
+    # 创建 Chrome 选项
+    options = webdriver.ChromeOptions()
+    ## start 设置无可视化页面
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+    # 创建 Chrome 服务
+    service = Service(chrome_driver_path)
+    # 创建 Chrome 驱动器
+    driver = webdriver.Chrome(service=service, options=options)
+    # 打开页面
+    driver.get(url)
+    # 使用 XPath 获取元素值
+    currentElement = driver.find_element(By.XPATH, '//*[@id="app"]/div/div/div[8]/div[1]/div/div[1]')
+    dayOpenElement = driver.find_element(By.XPATH,
+                                         '//*[@id="app"]/div/div/div[8]/div[2]/div/table/tbody/tr[1]/td[1]/span/span')
+    yesterdayEndOpenElement = driver.find_element(By.XPATH,
+                                                  '//*[@id="app"]/div/div/div[8]/div[2]/div/table/tbody/tr[2]/td[1]/span/span')
+    data = currentElement.text
+    print("今开盘价：" + dayOpenElement.text)
+    print("昨日收盘价：" + yesterdayEndOpenElement.text)
+    data = {
+        'current': currentElement.text,
+        'day_open': dayOpenElement.text,
+        'yesterday_end_open': yesterdayEndOpenElement.text
+    }
+    # 关闭浏览器
+    driver.quit()
+
+    # 返回数据给调用方
+    return jsonify({'data': data})
+
 
 if __name__ == '__main__':
-    # 查看是否有此目录
-    if not os.path.exists('./resumeLib'):
-        os.mkdir('./resumeLib')
-    # host = 'https://sc.chinaz.com/'
-    url = 'https://sc.chinaz.com/jianli/free.html'
-    header = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
-    }
-    response = requests.get(url=url, headers=header)
-    # 解决乱码问题
-    response.encoding = 'GBK'
-    response.encoding = 'utf-8'
-    # print(response.text)
-    responseEtree = etree.HTML(response.text)
-    aSpanXpaths = responseEtree.xpath('//div[@class="box col3 ws_block"]/a')
-    # print(aSpanXpaths)
-    for aSpan in aSpanXpaths:
-        url = aSpan.xpath('./@href')
-        fileName = aSpan.xpath('./img/@alt')[0]
-        # print(fileName)
-        downUrlDetail = url[0]
-        # print(downUrlDetail)
-        downPageResponse = requests.get(url=downUrlDetail, headers=header)
-        downPageResponse.encoding = 'GBK'
-        downPageResponse.encoding = 'utf-8'
-        # print(downPageResponse.text)
-        # 将资源地址放在etree对象
-        downLoadUrl = etree.HTML(downPageResponse.text)
-        # rarDownloadUrl = downLoadUrl.xpath('//url[@class="clearfix"]/li')
-        rarDownloadLiUrl = downLoadUrl.xpath('//div[@class="down_wrap"]//li/a/@href')[0]
-        # print(rarDownloadLiUrl)
-        resumeRarResponse = requests.get(url=rarDownloadLiUrl, headers=header)
-        #  todo 获取下载文件的问你件后缀拼接
-        with open('./resumeLib/' + fileName + '.rar', 'wb') as fb:
-            fb.write(resumeRarResponse.content)
-            print(fileName, "简历下载完毕！")
+    app.run(debug=True)

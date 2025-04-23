@@ -1,15 +1,13 @@
 from flask import Flask, jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 app = Flask(__name__)
 
-
 @app.route('/get_data/<page>', methods=['GET'])
 def get_data(page):
-    url = "https://quote.eastmoney.com/qihuo/" + page
+    url = "https://quote.eastmoney.com/globalfuture/" + page
     print(url)
     # 设置 Chrome 驱动器路径
     chrome_driver_path = './chromedriver'
